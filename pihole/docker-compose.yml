@@ -1,0 +1,51 @@
+# Docker Compose for PiHole, meant to be deployed on Portainer
+# Works with Traefik, a proxy server using labels
+# 1.  Ports:
+#     - "53:53/tcp" #Required for dns traffic
+#     - "53:53/udp" ##Required for dns traffic
+#     - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+#     - "80:80" #Required for the dashboard
+# 2.  Configuration data
+#     - Configuration for pihole and dnsmasq is stored on host directory $HOME/services/{pihole_data|dnsmasq_data}
+# 3.  PiHole dashboard password: Supplied with environment varaible $PIHOLE_PWD using Portainer
+# 4.  Connect the container to the same network as the network proxy, "proxy" in this case
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    environment:
+      - TZ=Asia/Kolkata
+      #TODO: Replace with Docker secrets, if easier
+      - WEBPASSWORD=$PIHOLE_PWD
+    volumes:
+      - "$HOME/services/pihole/pihole_data:/etc/pihole"
+      - "$HOME/services/pihole/dnsmasq_data:/etc/dnsmasq.d"
+    restart: unless-stopped
+    networks:
+      - proxy
+    env_file: #Used for Portainer to add environment variables
+      - stack.env
+    labels:
+      # Labels to route with Traefik
+      - "traefik.enable=true"
+      # HTTPS Router for the Pi-hole dashboard #https://pihole.srv
+      - "traefik.http.routers.pihole.rule=Host(`pihole.srv`)"
+      - "traefik.http.routers.pihole.entrypoints=websecure"
+      - "traefik.http.routers.pihole.tls=true"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+      #HTTPS Redirect from https://pihole.srv to https://pihole.srv/admin
+      - "traefik.http.middlewares.pihole-redirect.redirectregex.regex=^https://pihole\\.srv/$"
+      - "traefik.http.middlewares.pihole-redirect.redirectregex.replacement=https://pihole.srv/admin/"
+      - "traefik.http.middlewares.pihole-redirect.redirectregex.permanent=true"
+      - "traefik.http.routers.pihole.middlewares=pihole-redirect"
+      # DNS Router for DNS queries over TCP
+      - "traefik.tcp.routers.pihole-dns-tcp.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.pihole-dns-tcp.entrypoints=dns-tcp"
+      - "traefik.tcp.services.pihole-dns-tcp.loadbalancer.server.port=53"
+      # DNS Router for DNS queries over UDP
+      - "traefik.udp.routers.pihole-dns-udp.entrypoints=dns-udp"
+      - "traefik.udp.services.pihole-dns-udp.loadbalancer.server.port=53"
+networks:
+  proxy:
+    external: true
