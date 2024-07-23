@@ -18,6 +18,9 @@ services:
       - TZ=Asia/Kolkata
       #TODO: Replace with Docker secrets, if easier
       - WEBPASSWORD=$PIHOLE_PWD
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
     volumes:
       - "$HOME/services/pihole/pihole_data:/etc/pihole"
       - "$HOME/services/pihole/dnsmasq_data:/etc/dnsmasq.d"
