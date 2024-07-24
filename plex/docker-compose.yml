@@ -1,0 +1,30 @@
+---
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    networks:
+      - proxy
+    environment:
+      - PUID=${UID}
+      - PGID=${GID}
+      - TZ=Asia/Kolkata
+      - VERSION=latest
+    volumes:
+      - ${HOME}/services/plex:/config
+      - ${HOME}/Media/Series:/tv
+      - ${HOME}/Media/Movies:/movies
+    devices:
+      - /dev/dri:/dev/dri  # Pass through the DRI device for hardware acceleration
+    env_file: #Used for Portainer to add environment variables
+      - stack.env
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.plex.rule=Host(`plex.srv`)"
+      - "traefik.http.routers.plex.entrypoints=websecure"
+      - "traefik.http.routers.plex.tls=true"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
+networks:
+  proxy:
+    external: true
