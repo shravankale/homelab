@@ -10,17 +10,18 @@ services:
     restart: unless-stopped
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "$HOME/services/traefik/traefik.yml:/etc/traefik/traefik.yml:ro"
-      - "$HOME/services/traefik/certs:/opt/traefik/certs:ro"
-      - "$HOME/services/traefik/config:/opt/traefik/config:ro"
+      - "${HOME}/services/traefik/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "${HOME}/services/traefik/certs:/opt/traefik/certs:ro"
+      - "${HOME}/services/traefik/config:/opt/traefik/config:ro"
     networks:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.srv`)"
-      - "traefik.http.routers.traefik.entrypoints=websecure"
-      - "traefik.http.routers.traefik.tls=true"
-      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.api.rule=Host(`traefik.srv`)" #&& PathPrefix(`/api/overview`)      #Host(`traefik.srv`)
+      - "traefik.http.routers.api.entryPoints=web"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=basicauth-auth"
+      - "traefik.http.middlewares.basicauth-auth.basicauth.users=admin:{{TRAEFIK_API_PASSWORD}}"      #Use htpasswd or openssl to create hashed password using MD5 or SHA-1
 networks:
   proxy:
     external: true
