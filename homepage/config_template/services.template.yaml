@@ -1,0 +1,96 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- Calendar Section:
+  - Calendar:
+      widget:
+        type: calendar
+        firstDayInWeek: monday # optional - defaults to monday
+        view: monthly # optional - possible values monthly, agenda
+        maxEvents: 10 # optional - defaults to 10
+        showTime: true # optional - show time for event happening today - defaults to false
+        timezone: {{HOMEPAGE_VAR_TIMEZONE}} # optional and only when timezone is not detected properly (slightly slower performance) - force timezone for ical events (if it's the same - no change, if missing or different in ical - will be converted to this timezone)
+        integrations: # optional
+          #- type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr, ical
+            #service_group: Media # group name where widget exists
+            #service_name: Sonarr # service name for that widget
+            #color: teal # optional - defaults to pre-defined color for the service (teal for sonarr)
+            #params: # optional - additional params for the service
+              #unmonitored: true # optional - defaults to false, used with *arr stack
+          - type: ical # Show calendar events from another service
+            url: {{HOMEPAGE_VAR_CALENDAR_ICS}} # URL with calendar events
+            name: {{HOMEPAGE_VAR_CALENDAR_NAME}} # required - name for these calendar events
+            color: zinc # optional - defaults to pre-defined color for the service (zinc for ical)
+            params: # optional - additional params for the service
+              showName: true # optional - show name before event title in event line - defaults to false
+- iFrame Section:
+  - iFrame:
+      widget:
+        type: iframe
+        name: myIframe
+        src: https://example.com
+- Infrastructure Services:
+  - Portainer:
+        icon: portainer
+        href: https://{{HOMEPAGE_VAR_PORTAINER_DOMAIN}}
+        description: Docker Management
+        siteMonitor: https://{{HOMEPAGE_VAR_PORTAINER_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PORTAINER_CONTAINER_PORT}}
+        widget:
+          type: portainer
+          url: https://{{HOMEPAGE_VAR_PORTAINER_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PORTAINER_CONTAINER_PORT}}
+          env: 2
+          key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
+  - Traefik:
+        icon: traefik
+        href: https://{{HOMEPAGE_VAR_TRAEFIK_DOMAIN}}
+        description: Proxy Server
+        siteMonitor: http://{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_NAME}}
+        widget:
+          type: traefik
+          url: http://{{HOMEPAGE_VAR_TRAEFIK_DOMAIN}}
+          username: {{HOMEPAGE_VAR_TRAEFIK_DASHBOARD_USERNAME}}
+          password: {{HOMEPAGE_VAR_TRAEFIK_DASHBOARD_PASSWORD}}
+  - PiHole:
+        icon: pi-hole.svg
+        href: https://{{HOMEPAGE_VAR_PIHOLE_DOMAIN}}
+        description: DNS Management (no ad-blocking for now)
+        #siteMonitor: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}:{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_PORT}}
+        #widget:
+          #type: pihole
+          #url: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}:{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_PORT}}
+          #version: 5 # required if running v6 or higher, defaults to 5
+          #key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}" # optional
+  - MySpeed:
+        icon: librespeed.svg
+        href: https://{{HOMEPAGE_VAR_MYSPEED_DOMAIN}}
+        description: Network Speed Statistics
+        siteMonitor: http://{{HOMEPAGE_VAR_MYSPEED_CONTAINER_NAME}}:{{HOMEPAGE_VAR_MYSPEED_CONTAINER_PORT}}
+        widget:
+          type: myspeed
+          url: http://{{HOMEPAGE_VAR_MYSPEED_CONTAINER_NAME}}:{{HOMEPAGE_VAR_MYSPEED_CONTAINER_PORT}}
+
+- Media Services:
+  - Plex:
+        icon: plex
+        href: https://{{HOMEPAGE_VAR_PLEX_DOMAIN}}
+        description: Plex Server
+        #siteMonitor: http://{{HOMEPAGE_VAR_PLEX_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PLEX_CONTAINER_PORT}}
+        #widget:
+          #type: plex
+          #url: http://{{HOMEPAGE_VAR_PLEX_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PLEX_CONTAINER_PORT}}
+          #key: "{{HOMEPAGE_VAR_PLEX_KEY}}" #Open media on server --> Get More Info --> View XML --> Check in URL
+  - Jellyfin:
+        icon: jellyfin
+        href: https://{{HOMEPAGE_VAR_JELLY_DOMAIN}}
+        description: Jellyfin Server
+        #siteMonitor: http://{{HOMEPAGE_VAR_JELLY_CONTAINER_NAME}}:{{HOMEPAGE_VAR_JELLY_CONTAINER_PORT}}
+        #widget:
+          #type: jellyfin
+          #url: http://{{HOMEPAGE_VAR_JELLY_CONTAINER_NAME}}:{{HOMEPAGE_VAR_JELLY_CONTAINER_PORT}}
+          #key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          #enableBlocks: true # optional, defaults to false
+          #enableNowPlaying: true # optional, defaults to true
+          #enableUser: true # optional, defaults to false
+          #showEpisodeNumber: true # optional, defaults to false
+          #expandOneStreamToTwoRows: false # optional, defaults to true

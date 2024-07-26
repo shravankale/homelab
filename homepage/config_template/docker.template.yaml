@@ -1,0 +1,10 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/docker/
+
+# my-docker:
+#   host: ip address
+#   port: port_number
+
+# my-docker:
+#   socket: /var/run/docker.sock

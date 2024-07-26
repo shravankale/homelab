@@ -1,0 +1,57 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/settings
+
+providers:
+  openweathermap: openweathermapapikey
+  weatherapi: weatherapiapikey
+  finnhub: {{HOMPAGE_VAR_PROVIDER_FINNHUB}}
+
+
+headerStyle: boxed
+hideVersion: true
+#showStats: true
+favicon: {{HOMEPAGE_VAR_FAVICON}}
+
+title: {{HOMEPAGE_VAR_TITLE}}
+
+#background:
+  #image: {{HOMEPAGE_VAR_BACKGROUND_IMAGE}}
+  #blur: " "
+  #saturate: 99
+  #brightness: 99
+  #opacity: 99
+theme: dark
+cardBlur: xl
+
+layout:
+  #tab: first
+  #fiveColumns: true
+  useEqualHeights: true
+  Calendar Section:
+    style: column
+    row: 1
+    icon: windmill.png
+  iFrame Section:
+    style: column
+    row: 1
+    icon: windmill.png
+  Infrastructure Services:
+    #tab: first
+    style:  row
+    columns: 4
+    icon: windmill.png
+  Media Services:
+    #tab: second
+    style: row
+    columns: 2
+    icon: vultr.png
+  Bookmarks:
+    style: row
+    columns: 4
+    icon: jira
+
+
+
+
+
