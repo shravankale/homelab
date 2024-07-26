@@ -6,7 +6,7 @@ services:
     networks:
       - proxy
     volumes:
-      - $HOME/services/homepage:/app/config:ro 
+      - $HOME/services/homepage/config:/app/config:ro 
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - $HOME/services/homepage/images:/app/public/images:ro
       - $HOME/services/homepage/icons:/app/public/icons:ro
