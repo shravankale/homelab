@@ -55,7 +55,7 @@
         icon: pi-hole.svg
         href: https://{{HOMEPAGE_VAR_PIHOLE_DOMAIN}}
         description: DNS Management (no ad-blocking for now)
-        #siteMonitor: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}:{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_PORT}}
+        siteMonitor: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}:{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_PORT}}
         #widget:
           #type: pihole
           #url: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}:{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_PORT}}
@@ -75,7 +75,7 @@
         icon: plex
         href: https://{{HOMEPAGE_VAR_PLEX_DOMAIN}}
         description: Plex Server
-        #siteMonitor: http://{{HOMEPAGE_VAR_PLEX_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PLEX_CONTAINER_PORT}}
+        siteMonitor: http://{{HOMEPAGE_VAR_PLEX_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PLEX_CONTAINER_PORT}}
         #widget:
           #type: plex
           #url: http://{{HOMEPAGE_VAR_PLEX_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PLEX_CONTAINER_PORT}}
@@ -84,7 +84,7 @@
         icon: jellyfin
         href: https://{{HOMEPAGE_VAR_JELLY_DOMAIN}}
         description: Jellyfin Server
-        #siteMonitor: http://{{HOMEPAGE_VAR_JELLY_CONTAINER_NAME}}:{{HOMEPAGE_VAR_JELLY_CONTAINER_PORT}}
+        siteMonitor: http://{{HOMEPAGE_VAR_JELLY_CONTAINER_NAME}}:{{HOMEPAGE_VAR_JELLY_CONTAINER_PORT}}
         #widget:
           #type: jellyfin
           #url: http://{{HOMEPAGE_VAR_JELLY_CONTAINER_NAME}}:{{HOMEPAGE_VAR_JELLY_CONTAINER_PORT}}
