@@ -35,17 +35,17 @@
         icon: portainer
         href: https://{{HOMEPAGE_VAR_PORTAINER_DOMAIN}}
         description: Docker Management
-        siteMonitor: https://{{HOMEPAGE_VAR_PORTAINER_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PORTAINER_CONTAINER_PORT}}
+        siteMonitor: https://{{HOMEPAGE_VAR_PORTAINER_DOMAIN}}
         widget:
           type: portainer
-          url: https://{{HOMEPAGE_VAR_PORTAINER_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PORTAINER_CONTAINER_PORT}}
+          url: https://{{HOMEPAGE_VAR_PORTAINER_DOMAIN}}
           env: 2
           key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
   - Traefik:
         icon: traefik
         href: https://{{HOMEPAGE_VAR_TRAEFIK_DOMAIN}}
         description: Proxy Server
-        siteMonitor: http://{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_NAME}}
+        siteMonitor: http://{{HOMEPAGE_VAR_TRAEFIK_DOMAIN}}
         widget:
           type: traefik
           url: http://{{HOMEPAGE_VAR_TRAEFIK_DOMAIN}}
@@ -55,12 +55,12 @@
         icon: pi-hole.svg
         href: https://{{HOMEPAGE_VAR_PIHOLE_DOMAIN}}
         description: DNS Management (no ad-blocking for now)
-        siteMonitor: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}:{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_PORT}}
-        #widget:
-          #type: pihole
-          #url: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}:{{HOMEPAGE_VAR_TRAEFIK_CONTAINER_PORT}}
-          #version: 5 # required if running v6 or higher, defaults to 5
-          #key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}" # optional
+        siteMonitor: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}
+        widget:
+          type: pihole
+          url: http://{{HOMEPAGE_VAR_PIHOLE_CONTAINER_NAME}}
+          version: 5 # required if running v6 or higher, defaults to 5
+          key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}" # optional
   - MySpeed:
         icon: librespeed.svg
         href: https://{{HOMEPAGE_VAR_MYSPEED_DOMAIN}}
@@ -75,22 +75,22 @@
         icon: plex
         href: https://{{HOMEPAGE_VAR_PLEX_DOMAIN}}
         description: Plex Server
-        siteMonitor: http://{{HOMEPAGE_VAR_PLEX_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PLEX_CONTAINER_PORT}}
-        #widget:
-          #type: plex
-          #url: http://{{HOMEPAGE_VAR_PLEX_CONTAINER_NAME}}:{{HOMEPAGE_VAR_PLEX_CONTAINER_PORT}}
-          #key: "{{HOMEPAGE_VAR_PLEX_KEY}}" #Open media on server --> Get More Info --> View XML --> Check in URL
+        siteMonitor: https://{{HOMEPAGE_VAR_PLEX_DOMAIN}}
+        widget:
+          type: plex
+          url: https://{{HOMEPAGE_VAR_PLEX_DOMAIN}}
+          key: "{{HOMEPAGE_VAR_PLEX_KEY}}" #Open media on server --> Get More Info --> View XML --> Check in URL
   - Jellyfin:
         icon: jellyfin
         href: https://{{HOMEPAGE_VAR_JELLY_DOMAIN}}
         description: Jellyfin Server
-        siteMonitor: http://{{HOMEPAGE_VAR_JELLY_CONTAINER_NAME}}:{{HOMEPAGE_VAR_JELLY_CONTAINER_PORT}}
-        #widget:
-          #type: jellyfin
-          #url: http://{{HOMEPAGE_VAR_JELLY_CONTAINER_NAME}}:{{HOMEPAGE_VAR_JELLY_CONTAINER_PORT}}
-          #key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
-          #enableBlocks: true # optional, defaults to false
-          #enableNowPlaying: true # optional, defaults to true
-          #enableUser: true # optional, defaults to false
-          #showEpisodeNumber: true # optional, defaults to false
-          #expandOneStreamToTwoRows: false # optional, defaults to true
+        siteMonitor: https://{{HOMEPAGE_VAR_JELLY_DOMAIN}}
+        widget:
+          type: jellyfin
+          url: https://{{HOMEPAGE_VAR_JELLY_DOMAIN}}
+          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          enableBlocks: true # optional, defaults to false
+          enableNowPlaying: true # optional, defaults to true
+          enableUser: true # optional, defaults to false
+          showEpisodeNumber: true # optional, defaults to false
+          expandOneStreamToTwoRows: false # optional, defaults to true

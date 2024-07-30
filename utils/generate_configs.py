@@ -16,14 +16,16 @@ def get_secrets(env):
             print(f"The {{env}} is not a .env environment file")
         with open(env, 'r') as file:
             for line in file:
-                key,value = line.strip().split('=')
+                key,_,value = line.strip().partition('=')
+                value = value.strip('\"')
                 secrets[key]=value
     elif os.path.isdir(env):
         for file in os.listdir(env):
             if file.split('.')[-1]=='env':
                 with open(os.path.join(env,file), 'r') as file:
                     for line in file:
-                        key,value = line.strip().split('=')
+                        key,_,value = line.strip().partition('=')
+                        value = value.strip('\"')
                         secrets[key]=value
     else:
         if not os.path.exists(env):
@@ -49,18 +51,15 @@ def template_to_config(file, file_dir, config_dir,secrets):
         modified_config = []
         with open(template_path,'r') as template_file: #, open(config_path,'w') as config_file:
             for line in template_file:
-                match = REGEX.search(line)
+                match = REGEX.findall(line)
                 if match:
-                    if match.group(1):
-                        key = match.group(1)
-                    else:
-                        key = match.group(2)
-                    #.get(key,default) is useful in case of errors such as missing values
-                    line = line.replace(match.group(0), secrets.get(key, match.group(0)))
+                    for var in match:
+                        original_var = "{{"+var[0]+"}}"
+                        line = line.replace(original_var,secrets.get(var[0], original_var))
                     modified_config.append(line)
                 else:
                     modified_config.append(line)
-            
+                    
         with open(config_path,'w') as config_file:
             config_file.writelines(modified_config)
 
