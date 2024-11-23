@@ -3,6 +3,8 @@
 ### TODO:
 1. Test if "--accept-dns=false" is required
 
+Interesting article: [Run your own mesh vpn and dns with tailscale](https://shotor.com/blog/run-your-own-mesh-vpn-and-dns-with-tailscale-and-pihole/)
+
 ## Instructions:
 
 ### Install Tailscale on server
@@ -28,7 +30,7 @@ sudo tailscale up --accept-dns=false --advertise-routes=xxx.yy.0.0/mm
 Enable the subnet for the machine(server) on tailscale admin web console
 
 #### 2. Enable IP forwarding 
-IP forwarding: forwading packets across network interfaces on the server
+IP forwarding: forwarding packets across network interfaces on the server
 
 ```bash
 #Check current status of IP forwarding, If it returns 0, IP forwarding is disabled, and if 1 then it's enabled.
