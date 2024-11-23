@@ -3,18 +3,11 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: unless-stopped
-    #ports:
-      #- "9443:9443" 
+    ports:
+      - "9000:9000" 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainerData:/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.srv`)"
-      - "traefik.http.routers.portainer.entrypoints=websecure"
-      - "traefik.http.routers.portainer.tls=true"
-      - "traefik.http.services.portainer.loadbalancer.server.port=9000"  # Port exposed by the container #FIXME: Try using port 9443 to connect traefik and portainer over https
-      ##- "traefik.http.services.portainer.loadbalancer.server.scheme=https"
     networks:
       - proxy
 volumes:

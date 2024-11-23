@@ -5,6 +5,8 @@ services:
     container_name: homepage
     networks:
       - proxy
+    ports:
+      - "3000:3000"
     volumes:
       - $HOME/services/homepage/config:/app/config:ro 
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -13,12 +15,7 @@ services:
       - /mnt/sda:/mnt/sda:ro
     env_file: stack.env
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.homepage.rule=Host(`home.srv`)"
-      - "traefik.http.routers.homepage.entrypoints=websecure"
-      - "traefik.http.routers.homepage.tls=true"
-      - "traefik.http.services.homepage.loadbalancer.server.port=3000"
+
 networks:
   proxy:
     external: true 
