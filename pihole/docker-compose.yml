@@ -17,7 +17,7 @@ services:
     environment:
       - TZ=Asia/Kolkata
       #TODO: Replace with Docker secrets, if easier
-      - WEBPASSWORD=$PIHOLE_PWD
+      - WEBPASSWORD=${PIHOLE_PWD}
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -29,26 +29,6 @@ services:
       - proxy
     env_file: #Used for Portainer to add environment variables
       - stack.env
-    labels:
-      # Labels to route with Traefik
-      - "traefik.enable=true"
-      # HTTPS Router for the Pi-hole dashboard #https://pihole.srv
-      - "traefik.http.routers.pihole.rule=Host(`pihole.srv`)"
-      - "traefik.http.routers.pihole.entrypoints=websecure"
-      - "traefik.http.routers.pihole.tls=true"
-      - "traefik.http.services.pihole.loadbalancer.server.port=80"
-      #HTTPS Redirect from https://pihole.srv to https://pihole.srv/admin
-      - "traefik.http.middlewares.pihole-redirect.redirectregex.regex=^https://pihole\\.srv/$"
-      - "traefik.http.middlewares.pihole-redirect.redirectregex.replacement=https://pihole.srv/admin/"
-      - "traefik.http.middlewares.pihole-redirect.redirectregex.permanent=true"
-      - "traefik.http.routers.pihole.middlewares=pihole-redirect"
-      # DNS Router for DNS queries over TCP
-      - "traefik.tcp.routers.pihole-dns-tcp.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.pihole-dns-tcp.entrypoints=dns-tcp"
-      - "traefik.tcp.services.pihole-dns-tcp.loadbalancer.server.port=53"
-      # DNS Router for DNS queries over UDP
-      - "traefik.udp.routers.pihole-dns-udp.entrypoints=dns-udp"
-      - "traefik.udp.services.pihole-dns-udp.loadbalancer.server.port=53"
 volumes:
   pihole_data:
     external: true
