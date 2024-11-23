@@ -21,12 +21,6 @@ services:
     env_file: #Used for Portainer to add environment variables
       - stack.env
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.plex.rule=Host(`plex.srv`)"
-      - "traefik.http.routers.plex.entrypoints=websecure"
-      - "traefik.http.routers.plex.tls=true"
-      - "traefik.http.services.plex.loadbalancer.server.port=32400"
 volumes:
   plex_data:
     external: true

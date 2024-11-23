@@ -5,17 +5,11 @@ services:
     container_name: myspeed
     networks:
       - proxy
-    #ports:
-      #- 5216:5216
+    ports:
+      - 5216:5216
     volumes:
       - myspeed:/myspeed/data:rw
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.myspeee.rule=Host(`myspeed.srv`)"
-      - "traefik.http.routers.myspeee.entrypoints=websecure"
-      - "traefik.http.routers.myspeee.tls=true"
-      - "traefik.http.services.myspeee.loadbalancer.server.port=5216"
 volumes:
   myspeed_data:
     external: true

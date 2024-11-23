@@ -1,0 +1,28 @@
+
+# Plex Service
+plex.srv {
+    reverse_proxy plex:32400
+    tls internal
+}
+
+# Pihole Service
+pihole.srv {
+    reverse_proxy pihole:80
+    tls internal
+}
+
+# Get Certificate
+getcert.srv {
+    root * /data/certs
+    file_server
+
+    tls internal
+
+    redir / /caddy-root.crt 302
+}
+
+# MySpeed Service
+myspeed.srv {
+    reverse_proxy myspeed:5216
+    tls internal
+}
