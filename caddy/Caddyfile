@@ -26,3 +26,21 @@ myspeed.srv {
     reverse_proxy myspeed:5216
     tls internal
 }
+
+# Portainer Service
+portainer.srv {
+    reverse_proxy portainer:9000
+    tls internal
+}
+
+# Jellyfin Service
+jelly.srv {
+    reverse_proxy jellyfin:8096
+    tls internal
+}
+
+# Homepage Service
+home.srv {
+    reverse_proxy homepage:3000
+    tls internal
+}
