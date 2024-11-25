@@ -1,3 +1,6 @@
+#https://github.com/nextcloud/all-in-one#nextcloud-all-in-one
+#Built compose file from from https://github.com/nextcloud/all-in-one/blob/main/compose.yaml
+
 services:
   nextcloud-aio-mastercontainer:
     image: nextcloud/all-in-one:latest
@@ -8,7 +11,7 @@ services:
     restart: always
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /home/shravankale/services/caddy/certs/caddy-root.crt:/usr/local/share/ca-certificates/caddy-root.crt
+      - ${HOME}/services/caddy/certs/caddy-root.crt:/usr/local/share/ca-certificates/caddy-root.crt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - proxy
@@ -16,7 +19,7 @@ services:
       - 8080:8080
     environment:
       - APACHE_PORT=11000
-      - APACHE_IP_BINDING=0.0.0.0
+      - APACHE_IP_BINDING=127.0.0.1
       - APACHE_ADDITIONAL_NETWORK=proxy
 volumes:
   nextcloud_aio_mastercontainer:
@@ -24,5 +27,3 @@ volumes:
 networks:
   proxy:
     external: true
-
-#fancied stowaway remodeler entangled outnumber undated regime rockiness
