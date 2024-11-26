@@ -5,13 +5,15 @@ services:
   nextcloud-aio-mastercontainer:
     image: nextcloud/all-in-one:latest
     container_name: nextcloud-aio-mastercontainer
-    #command: >
-      #sh -c "update-ca-certificates && /start.sh"
+    #entrypoint: ["/var/www/docker-aio/entrypoint-update-ca-certificates.sh"]
     init: true
     restart: always
     volumes:
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      #- ${HOME}/services/nextcloud/entrypoint-update-ca-certificates.sh:/var/www/docker-aio/entrypoint-update-ca-certificates.sh:rw
       - ${HOME}/services/caddy/certs/caddy-root.crt:/usr/local/share/ca-certificates/caddy-root.crt
+      - ${HOME}/services/caddy/certs:/certs
+      - ${EXTERNAL_STORAGE_MOUNTPOINT}:/backups
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - proxy
@@ -21,6 +23,8 @@ services:
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=127.0.0.1
       - APACHE_ADDITIONAL_NETWORK=proxy
+      - NEXTCLOUD_TRUSTED_CACERTS_DIR=/certs
+      #- NEXTCLOUD_MOUNT=${EXTERNAL_STORAGE_MOUNTPOINT} #Make ${EXTERNAL_STORAGE_MOUNTPOINT} available as external storage
 volumes:
   nextcloud_aio_mastercontainer:
     external: true

@@ -1,4 +1,3 @@
-
 services:
   caddy:
     image: caddy:latest
@@ -6,20 +5,19 @@ services:
     networks:
       - proxy
     ports:
-      - 80:80     #http
-      - 443:443   #https
+      - 80:80     # http
+      - 443:443   # https
     volumes:
-      - caddy_data:/data    #Persistent storage for certificates
-      - caddy_config:/config    #For internal Caddy settings
-      - /home/shravankale/services/caddy/certs/caddy-root.crt:/data/certs/caddy-root.crt
-      - /home/shravankale/services/caddy/Caddyfile:/etc/caddy/Caddyfile:ro #Bind the local Caddyfile to the container
-      - /home/shravankale/services/caddy/site:/srv # Future: For static content check docs 
-      #Backup data using binding a dir 
-      #- - /path/to/caddy_data_on_host:/data
+      - caddy_data:/data    # Persistent storage for certificates
+      - caddy_config:/config    # For internal Caddy settings
+      - ${HOME}/services/caddy/Caddyfile:/etc/caddy/Caddyfile:ro # Bind the local Caddyfile to the container
+      - ${HOME}/services/caddy/site:/srv # Future: For static content check docs 
     restart: unless-stopped
 volumes:
   caddy_data:
+    external: true
   caddy_config:
+    external: true
 networks:
   proxy:
     external: true

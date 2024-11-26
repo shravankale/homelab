@@ -47,6 +47,6 @@ home.srv {
 
 # Nextcloud Service
 ncloud.srv {
-    reverse_proxy nextcloud_aio_domaincheck:11000
+    reverse_proxy nextcloud-aio-apache:11000
     tls internal
 }
