@@ -11,9 +11,9 @@ pihole.srv {
     tls internal
 }
 
-# Get Certificate
+# Get Certificate - Originally fetching from /data/certs
 getcert.srv {
-    root * /data/certs
+    root * /data/from-host-cert
     file_server
 
     tls internal
