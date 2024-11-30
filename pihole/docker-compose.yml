@@ -9,6 +9,8 @@
 #     - Configuration for pihole and dnsmasq is stored on host directory $HOME/services/{pihole_data|dnsmasq_data}
 # 3.  PiHole dashboard password: Supplied with environment varaible $PIHOLE_PWD using Portainer
 # 4.  Connect the container to the same network as the network proxy, "proxy" in this case
+# 5. Note: Under Settings->DNS test setting "Respond only on interface eth0" to resolve local devices being blocked
+# 5.  Note: More on why hardcoding the ip address under ports https://stackoverflow.com/questions/64007727/docker-compose-internal-dns-server-127-0-0-11-connection-refused/69994721#69994721
 
 services:
   pihole:
@@ -18,9 +20,10 @@ services:
       - TZ=Asia/Kolkata
       #TODO: Replace with Docker secrets, if easier
       - WEBPASSWORD=${PIHOLE_PWD}
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
+    ports: 
+      - "<host_ip_address>53:53/tcp" #Adding IP address helps with containers on bridge network being able to communicate. Wasn't getting dns resolution without the ip
+      - "<host_ip_address>53:53/udp"
+      - "8011:80" #Added a random 8011 port mapped to 80 to access the dashboard on the host network in the case pihole container is not functioning to resolve it's own domain
     volumes:
       - "pihole_data:/etc/pihole"
       - "dnsmasq_data:/etc/dnsmasq.d"
